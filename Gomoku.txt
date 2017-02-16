@@ -1,0 +1,116 @@
+Gomoku Rules :
+
+* Règles basiques :
+	- Plateau de 19 x 19
+	- Nombre de pierres illimité
+	- Le choix de la couleur est déterminé aléatoirement en debut de partie
+	- Possibilité de capturer les pierres adverse par paire (et seulement par paire)
+	- Les noires commence toujours la partie
+
+* Règles particulieres :
+	- No double threes : interdiction de jouer un coup qui permet d'avoir 2 alignements ouverts de 3 pierres (victoire garantie)
+	- Capture, cas particulier : 
+		Si alignement  "X O a X" , O peut se placer sur 'a' mais ne sera PAS capturer
+
+* Condition de victoire :
+	- Aligner 5 pierres ou plus.
+	- Capturer 10 pierres adverse (5 paires)
+
+* Cas particulier victoire :
+	- Si 5 pierres alignés, laisser un coup a l'adversaire si il a la possibilité de capturer une 5ème paire ou de casser l'alignement par la capture.
+
+
+
+
+** Bonus (règles de départ) **
+	
+	- Standard :
+		.Précedement expliqué, problème : dans un cadre de joueur parfait, le premier qui commence gagne a coup sûr
+
+	- Pro : 
+		.Le joueur noire commence la partie, il place sa première pièce au centre du plateau
+		.Le deuxieme joueur place à son tour sa première pièce sur une intersection adjacente (8 possibilitées)
+		.Le joueur noire pose une pièce à au mois 3 cases du centre du plateau
+		.La victoire n'est possible qu'avec un alignement de 5 pierres (6 ou plus ne compte pas)
+
+	- Swap :
+		.Le premier joueur pose 3 pierres n'importe où sur le plateau (2 noires, 1 blanche)
+		.Le premier joueur doit s'assurer que l'interval entre les couleurs est le même (à clarifier)
+		.Le deuxième joueur choisi ensuite sa couleur
+		.La victoire n'est possible qu'avec un alignement de 5 pierres (6 ou plus ne compte pas)
+
+	- Swap2 :
+		.Le premier joueur pose 3 pierres n'importe où sur le plateau (2 noires, 1 blanche)
+		.Le deuxième joueur choisi ensuite sa couleur ou decide de poser 2 pierres supplementaires (1 blanche, 1 noire)
+		.Si le deuxieme joueur decide de poser 2 pierres de plus, c'est au premier joueur de choisir sa couleur
+		.La victoire n'est possible qu'avec un alignement de 5 pierres (6 ou plus ne compte pas)
+
+
+*** Implementation de l'IA (piste de reflexion et feature obligatoire)
+
+	- (Obligatoire) l'IA doit implementer l'algorithme "Min-Max"
+	- (Obligatoire) un timer doit être implementé dans l'interface graphique pour déterminer en combien de temps l'IA trouve son prochain coup
+	- Implementation algorithme "alpha beta"
+	- Un debuggueur pour le developpement et la correction
+	- Multithreading ou parallelisation :
+		.Utilisation de <thread> c++11
+		.Utilisation d'une librarie OpenMp ou Intel TBB (très simple d'utilisation)
+
+
+
+
+
+/// Mini-Max Alpha-beta pseudo code ///
+
+function alphabeta(node, depth, alpha, beta, maxPlayer)
+
+	if (depth = 0 || node is terminal node)
+		return heuristic node
+
+	if (maxPlayer)
+	{
+		v = -∞
+		foreach (child of node)
+		{
+			v = max(v, alphabeta(child, depth - 1, alpha, beta, FALSE))
+			alpha = max(alpha, v)
+
+			if (beta <= alpha)
+				break (CUT)
+		}
+		return v
+	}
+	else //si minPlayer
+	{
+		v = +∞
+		foreach (child of node)
+		{
+			v = min(v, alphabeta(child, depth - 1, alpha, beta, TRUE))
+			beta = min(beta, v)
+
+			if (beta <= alpha)
+				break (CUT)
+		}
+		return v
+	}
+
+
+>> First call :
+	alphabeta(root, depth, -∞, +∞, TRUE);
+
+/// Possible coup ///
+
+- Prendre en compte les coups interdits
+- Minimiser le nombre de fils possible et donc reduire les coups possible autour des pierres deja placées
+
+/// Heuristic ///
+
+Elément a identifier (pour l'ia et l'adversaire):
+	- check alignement : vertical, horizontal, diagonal
+		.Prendre en compte les lignes complete et incomplete (-XXXX-, -X-XXX-, ...)
+	- check si assez de place pour un align de 5
+	- check si possibilité de capture
+	- check si combinaison avantageuse
+
+
+
