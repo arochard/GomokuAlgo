@@ -1,6 +1,6 @@
 #include "Node.hpp"
 
-int 		evalHeuristic(Node *node)
+uint16_t		evalHeuristic(Node *node)
 {
 
 }
