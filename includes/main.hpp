@@ -7,6 +7,7 @@
 # define STRAIGHT_FOUR 100 // _XXXX_
 # define THREE 20 //__XXX__ or O_XXX__
 # define BROKEN_THREE 30 // _X_XX_ or _XX_X_
+# define SIZE_BOARD 19
 
 # include <vector>
 # include <cstdint>

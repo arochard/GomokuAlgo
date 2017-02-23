@@ -15,6 +15,8 @@ class Node
 		uint16_t			lowerBound;
 		uint16_t			upperBound;
 		bool 				maxNode;
+		char 				stone;
+		char[SIZE_BOARD][SIZE_BOARD] map;
 		std::vector<Node*> 	childs;
 
 		Node*				getFirstChild();
