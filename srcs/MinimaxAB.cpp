@@ -1,27 +1,11 @@
 #include "Node.hpp"
 #include "HashTT.hpp"
 
-static uint16_t max(uint16_t a, uint16_t b)
+int16_t	 		alphaBetaWithMemory(Node *node, int16_t alpha, int16_t beta, int8_t depth)
 {
-	if (a > b)
-		return (a);
-	else
-		return (b);
-}
-
-static uint16_t	min(uint16_t a, uint16_t b)
-{
-	if (a < b)
-		return (a);
-	else
-		return (b);
-}
-
-uint16_t	 	alphaBetaWithMemory(Node *node, uint16_t alpha, uint16_t beta, uint8_t depth)
-{
-	uint16_t 	val;
-	uint16_t 	a;
-	uint16_t 	b;
+	int16_t 	val;
+	int16_t 	a;
+	int16_t 	b;
 	Node 		*child;
 	hashEntry	tt;
 
@@ -31,8 +15,8 @@ uint16_t	 	alphaBetaWithMemory(Node *node, uint16_t alpha, uint16_t beta, uint8_
 			return (tt.lowerBound);
 		if (tt.upperBound <= alpha)
 			return (tt.upperBound);
-		alpha = max(alpha, tt.lowerBound);
-		beta = min(beta, tt.upperBound);
+		alpha = std::max(alpha, tt.lowerBound);
+		beta = std::min(beta, tt.upperBound);
 	}
 
 	if (!depth)
@@ -44,8 +28,8 @@ uint16_t	 	alphaBetaWithMemory(Node *node, uint16_t alpha, uint16_t beta, uint8_
 		child = getFirstChild();
 		while(val < beta && child != NULL)
 		{
-			val = min(val, alphaBetaWithMemory(child, a, beta, depth - 1));
-			a = max(a, val);
+			val = std::min(val, alphaBetaWithMemory(child, a, beta, depth - 1));
+			a = std::max(a, val);
 			child = getNextChild();
 		}
 	}
@@ -56,8 +40,8 @@ uint16_t	 	alphaBetaWithMemory(Node *node, uint16_t alpha, uint16_t beta, uint8_
 		child = getFirstChild();
 		while(val > alpha && child != NULL)
 		{
-			val = min(val, alphaBetaWithMemory(child, alpha, b, depth - 1));
-			b = min(b, val);
+			val = std::min(val, alphaBetaWithMemory(child, alpha, b, depth - 1));
+			b = std::min(b, val);
 			child = getNextChild();
 		}
 	}
