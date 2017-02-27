@@ -27,8 +27,7 @@ int main()
 		"-------------------";
 	}
 
-	
-
-
+	Node   	node = Node();
+	node.map = map;
 	return 0;
 }

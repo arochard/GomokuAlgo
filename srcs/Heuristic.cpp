@@ -11,7 +11,6 @@ static int16_t	checkVertical(Node *node, uint8_t col, uint8_t row)
 	for (uint8_t i = col; i < col - 6; i--)
 	{
 		j++;
-		
 	}
 }
 
