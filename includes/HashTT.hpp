@@ -1,13 +1,17 @@
 #include "main.hpp"
 #include "sparsepp.hpp"
 
-typedef struct 		s_hash_entry
+class 	HashEntry
 {
-	uint8_t			depth;
-	uint16_t 		value;
-	uint16_t		lowerBound;
-	uint16_t		upperBound;
-}					hashEntry;
+	public:
+		uint8_t			depth;
+		uint16_t 		value;
+		uint16_t		lowerBound;
+		uint16_t		upperBound;
+
+		HashEntry(){};
+		~HashEntry(){};
+};
 
 class HashTT
 {

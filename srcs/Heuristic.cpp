@@ -8,10 +8,7 @@ static int16_t	checkVertical(Node *node, uint8_t col, uint8_t row)
 	char 		curStone = node->map[col][row];
 	uint8_t 	j = col;
 
-	for (uint8_t i = col; i < col - 6; i--)
-	{
-		j++;
-	}
+	
 }
 
 static int16_t	checkHorizontal(Node *node, uint8_t col, uint8_t row)
