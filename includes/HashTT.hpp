@@ -1,5 +1,4 @@
 #include "main.hpp"
-#include "sparsepp.hpp"
 
 class 	HashEntry
 {
@@ -16,10 +15,10 @@ class 	HashEntry
 class HashTT
 {
 	private:
-		spp::sparse_hash_map<uint64_t, hashEntry>	_hashTable;
+		std::unordered_map<uint64_t, HashEntry>	_hashTable;
 	
 	public:
-		hashEntry									checkHashTable(Node* node);
+		HashEntry									*checkHashTable(Node* node);
 		void 										createNewEntry(Node* node);
 
 		HashTT();

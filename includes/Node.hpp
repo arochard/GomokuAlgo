@@ -7,8 +7,8 @@
 
 class Node
 {
-	private:
-		uint16_t 			_indexChild;
+	// private:
+		// 	uint16_t 			_indexChild;
 
 	public:
 		uint8_t 			depth;
