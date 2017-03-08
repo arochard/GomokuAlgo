@@ -1,7 +1,8 @@
 NAME := Gomoku
 
 CC := clang++ 
-CFLAGS := -c -std=c++11 -Wall -Wextra -O3 -Werror
+CFLAGS := -c -std=c++11 -Wall -Wextra -O3 
+#-Werror
 
 SRC_DIR := srcs
 INC_DIRS := $(shell find includes/* -name '*.hpp' -exec dirname {} \; | sort | uniq)

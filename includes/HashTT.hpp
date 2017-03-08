@@ -4,9 +4,9 @@ class 	HashEntry
 {
 	public:
 		uint8_t			depth;
-		uint16_t 		value;
-		uint16_t		lowerBound;
-		uint16_t		upperBound;
+		int16_t 		value;
+		int16_t			lowerBound;
+		int16_t			upperBound;
 
 		HashEntry(){};
 		~HashEntry(){};
@@ -19,7 +19,7 @@ class HashTT
 	
 	public:
 		HashEntry									*checkHashTable(Node* node);
-		void 										createNewEntry(Node* node);
+		void 										createNewEntry(HashEntry tt);
 
 		HashTT();
 		~HashTT();

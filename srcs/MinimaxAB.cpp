@@ -1,31 +1,32 @@
 #include "Node.hpp"
 #include "HashTT.hpp"
 
-int16_t	 		alphaBetaWithMemory(Node *node, int16_t alpha, int16_t beta, int8_t depth)
+/*int16_t	 		alphaBetaWithMemory(Node *node, int16_t alpha, int16_t beta, uint8_t depth)
 {
 	int16_t 	val;
 	int16_t 	a;
 	int16_t 	b;
 	Node 		*child;
-	hashEntry	tt;
+	HashEntry	*res;
+	HashEntry 	tt;
 
-	if ((tt = checkHashTable(node)) != NULL)
+	if ((res = checkHashTable(node)) != NULL)
 	{
-		if (tt.lowerBound >= beta)
-			return (tt.lowerBound);
-		if (tt.upperBound <= alpha)
-			return (tt.upperBound);
-		alpha = std::max(alpha, tt.lowerBound);
-		beta = std::min(beta, tt.upperBound);
+		if (res->lowerBound >= beta)
+			return (res->lowerBound);
+		if (res->upperBound <= alpha)
+			return (res->upperBound);
+		alpha = std::max(alpha, res->lowerBound);
+		beta = std::min(beta, res->upperBound);
 	}
 
 	if (!depth)
 		val = evalHeuristic(node);
 	else if (node.maxNode == TRUE)
 	{
-		val = -INF;
+		val = SHRT_MIN;
 		a = alpha;
-		child = getFirstChild();
+		child = getNextChild();
 		while(val < beta && child != NULL)
 		{
 			val = std::min(val, alphaBetaWithMemory(child, a, beta, depth - 1));
@@ -35,9 +36,9 @@ int16_t	 		alphaBetaWithMemory(Node *node, int16_t alpha, int16_t beta, int8_t d
 	}
 	else
 	{
-		val = INF;
+		val = SHRT_MAX;
 		b = beta;
-		child = getFirstChild();
+		child = getNextChild();
 		while(val > alpha && child != NULL)
 		{
 			val = std::min(val, alphaBetaWithMemory(child, alpha, b, depth - 1));
@@ -46,22 +47,24 @@ int16_t	 		alphaBetaWithMemory(Node *node, int16_t alpha, int16_t beta, int8_t d
 		}
 	}
 
+	tt.lowerBound = SHRT_MIN;
+	tt.upperBound = SHRT_MAX;
 	if (val <= alpha)
 	{
 		tt.upperBound = val;
-		createNewEntry(tt);
+		createNewEntry(node->map, tt);
 	}
 	if (val > alpha && val < beta)
 	{
 		tt.lowerBound = val;
 		tt.upperBound = val;
-		createNewEntry(node.lowerBound);
-		createNewEntry(node.upperBound);
+		createNewEntry(node->map, tt);
+		createNewEntry(node->map, tt);
 	}
 	if (val >= beta)
 	{
-		node.lowerBound = val;
-		createNewEntry(node.lowerBound);
+		tt.lowerBound = val;
+		createNewEntry(node->map, tt);
 	}
 	return (val);
-}
+}*/

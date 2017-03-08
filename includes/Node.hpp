@@ -1,29 +1,26 @@
 #ifndef __NODE__
 # define __NODE__
 
-# define INF 10000
-
-#include "main.hpp"
+# include "main.hpp"
 
 class Node
 {
-	// private:
-		// 	uint16_t 			_indexChild;
+	private:
+	 	uint16_t 			_indexChild;
 
 	public:
 		uint8_t 			depth;
-		uint16_t			lowerBound;
-		uint16_t			upperBound;
+		// int16_t				lowerBound;
+		// int16_t				upperBound;
 		bool 				maxNode;
-		char 				stone;
-		char[SIZE_BOARD][SIZE_BOARD] map;
+		uint8_t 			playerNum;
+		uint8_t  			map[SIZE_BOARD][SIZE_BOARD];
 		std::vector<Node*> 	childs;
 
-		Node*				getFirstChild();
 		Node*				getNextChild();
+		void 				insertChild(Node* node);
 
-		void 				insertChild();
-		Node();
+		Node(uint8_t map[SIZE_BOARD][SIZE_BOARD], uint16_t moveCoord, bool maxNode, uint8_t depth, uint8_t player);
 		~Node();
 	
 };
