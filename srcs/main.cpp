@@ -37,30 +37,45 @@ std::vector<uint16_t>		findPossibleMove(uint8_t map[SIZE_BOARD][SIZE_BOARD])
 	return (moves);
 }
 
-Node 		*generateTree(uint8_t map[SIZE_BOARD][SIZE_BOARD])
+void 			generateTree(Node *node)
 {
-	Node 	*root;
-	std::vector<uint16_t> moves = findPossibleMove(map);
-
 	//DEBUG
-	for (auto& m : moves)
-		std::cout << m << " ";
+	for (auto& l : node->map)
+	{
+		for (auto& c : l)
+		{
+			std::cout << c << " ";
+		}
+		std::cout << std::endl;
+	}
 
-	// if (root == NULL)
-	// 	root = Node(map, 0, TRUE, 10, 2);
+	if (node->depth < 0)
+		return;
 
-	// for(auto& M : moves) //vector of possible moves
-	// {
-		
-	// }
-	return (root);
+	std::vector<uint16_t> moves = findPossibleMove(node->map);
+	Node *tmp;
+	//DEBUG
+	// for (auto& m : moves)
+		std::cout << "depth : " << node->depth << std::endl;
+
+	//depth--;
+
+	for(auto& M : moves) //vector of possible moves
+	{
+		if ((node->depth - 1) % 2 == 1)
+			tmp = new Node(node->map, M, false, node->depth - 1, 2);
+		else
+			tmp = new Node(node->map, M, true, node->depth - 1, 1);
+
+		node->insertChild(tmp);
+		generateTree(tmp);
+	}
 }
 
 int main()
 {
 	uint8_t	map[SIZE_BOARD][SIZE_BOARD] = 
 	{
-		{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -69,9 +84,10 @@ int main()
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -81,9 +97,8 @@ int main()
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	};
 
-	Node* 	tree = generateTree(map);
+	Node *tree = new Node(map, -1, true, 2, 1);
+	generateTree(tree);
 
 	return 0;
 }
-
-// 153 155 172
