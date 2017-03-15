@@ -1,6 +1,8 @@
 #include "main.hpp"
 #include "Node.hpp"
 
+t_debug 	*g_debug;
+
 std::vector<uint16_t>		findPossibleMove(uint8_t map[SIZE_BOARD][SIZE_BOARD])
 {
 	std::vector<uint16_t> 	moves;
@@ -40,28 +42,33 @@ std::vector<uint16_t>		findPossibleMove(uint8_t map[SIZE_BOARD][SIZE_BOARD])
 void 			generateTree(Node *node)
 {
 	//DEBUG
-	for (auto& l : node->map)
-	{
-		for (auto& c : l)
-		{
-			std::cout << c << " ";
-		}
-		std::cout << std::endl;
-	}
+	// for (auto& l : node->map)
+	// {
+	// 	for (auto& c : l)
+	// 	{
+	// 		std::cout << c + '0' << " ";
+	// 	}
+	// 	std::cout << std::endl;
+	// }
 
 	if (node->depth < 0)
+	{
+		g_debug->map_f = node->map;
+		g_debug->leaf++;
 		return;
+	}
 
 	std::vector<uint16_t> moves = findPossibleMove(node->map);
 	Node *tmp;
 	//DEBUG
 	// for (auto& m : moves)
-		std::cout << "depth : " << node->depth << std::endl;
+		// std::cout << "depth : " << node->depth << std::endl;
 
 	//depth--;
 
 	for(auto& M : moves) //vector of possible moves
 	{
+		g_debug->nb_node++;
 		if ((node->depth - 1) % 2 == 1)
 			tmp = new Node(node->map, M, false, node->depth - 1, 2);
 		else
@@ -74,6 +81,11 @@ void 			generateTree(Node *node)
 
 int main()
 {
+	g_debug = new t_debug;
+	g_debug->level = 0;
+	g_debug->nb_node = 0;
+	g_debug->leaf = 0;
+
 	uint8_t	map[SIZE_BOARD][SIZE_BOARD] = 
 	{
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
@@ -97,8 +109,11 @@ int main()
 		{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	};
 
-	Node *tree = new Node(map, -1, true, 2, 1);
+	Node *tree = new Node(map, -1, true, 4, 1);
 	generateTree(tree);
+
+	// DEBUG
+	std::cout << "Nb node generate : " << g_debug->nb_node << std::endl << "Nb leafs generate : " << g_debug->leaf << std::endl << "Level : " << g_debug->level;
 
 	return 0;
 }

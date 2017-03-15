@@ -23,6 +23,16 @@
 # include <climits>
 # include <iostream>
 
+typedef struct 		s_debug
+{
+	uint 			nb_node;
+	uint 			level;
+	uint 			leaf;
+	uint8_t 		map_f;
+}					t_debug;
+
+extern 	t_debug 	*g_debug;
+
 // typedef struct  	bitboard
 // {
 // 	uint64_t		bb[6];
